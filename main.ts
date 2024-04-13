@@ -1,4 +1,4 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, Command } from 'obsidian';
 
 // Remember to rename these classes and interfaces!
 
@@ -152,3 +152,11 @@ class SampleSettingTab extends PluginSettingTab {
 				}));
 	}
 }
+// Add a new command for opening the Feeling Wheel
+this.addCommand({
+    id: 'open-feeling-wheel',
+    name: 'Open Feeling Wheel',
+    callback: () => {
+        new PieChartModal(this.app).open();
+    }
+});
