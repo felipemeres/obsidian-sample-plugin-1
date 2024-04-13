@@ -10,6 +10,15 @@ const DEFAULT_SETTINGS: MyPluginSettings = {
 	mySetting: 'default'
 }
 
+// Add a new command for opening the Feeling Wheel
+this.addCommand({
+    id: 'open-feeling-wheel',
+    name: 'Open Feeling Wheel',
+    callback: () => {
+        new PieChartModal(this.app).open();
+    }
+});
+
 class PieChartModal extends Modal {
     constructor(app: App) {
         super(app);
