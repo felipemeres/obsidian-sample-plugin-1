@@ -10,14 +10,19 @@ const DEFAULT_SETTINGS: MyPluginSettings = {
 	mySetting: 'default'
 }
 
-class SampleModal extends Modal {
+
+// code: Add the PieChartModal class implementation here
+class PieChartModal extends Modal {
 	constructor(app: App) {
 		super(app);
 	}
 
 	onOpen() {
 		const { contentEl } = this;
-		contentEl.setText('Woah oi querida!');
+		// Here you would use a library like Chart.js or D3.js to create the actual pie chart
+		// For simplicity, we're just going to set some placeholder text
+		contentEl.setText('Feeling Wheel Placeholder');
+		// You would also include the logic to render the pie chart here
 	}
 
 	onClose() {
@@ -25,6 +30,7 @@ class SampleModal extends Modal {
 		contentEl.empty();
 	}
 }
+
 
 class PieChartModal extends Modal {
 	constructor(app: App) {
@@ -158,3 +164,12 @@ export default class MyPlugin extends Plugin {
 		await this.saveData(this.settings);
 	}
 }
+// code: Add the command to open the PieChartModal here
+this.addCommand({
+	id: 'open-feeling-wheel',
+	name: 'Open Feeling Wheel',
+	callback: () => {
+		new PieChartModal(this.app).open();
+	}
+});
+
