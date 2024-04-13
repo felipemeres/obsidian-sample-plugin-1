@@ -78,6 +78,7 @@ export default class MyPlugin extends Plugin {
 		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
 
 		// <!-- code: create a modal in the shape of a pie chart -->
+	// Code to create a modal in the shape of a pie chart would be implemented here
 	}
 
 	onunload() {
