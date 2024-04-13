@@ -34,11 +34,14 @@ class PieChartModal extends Modal {
 
 	onOpen() {
 		const { contentEl } = this;
-		// <!-- code: refactor the modal so that only the pie chart appears - without a box as a backfrop -->
+		// code: Modal refactored so that only the pie chart appears without a box as a backdrop
+		contentEl.addClass('pie-chart-modal');
 		const data = [10, 20, 30, 40]; // Sample data
 		const svg = d3.create("svg")
 			.attr("width", 200)
 			.attr("height", 200);
+			.attr("height", 200)
+			.attr("viewBox", "-100 -100 200 200"); // Adjust viewBox for proper scaling and centering
 		// <!-- code: make the pie a complete circle with multiple separations, making each one a different color -->
 		const pie = d3.pie();
 		const arc = d3.arc().innerRadius(0).outerRadius(100);
@@ -48,7 +51,8 @@ class PieChartModal extends Modal {
 			.enter()
 			.append("path")
 			.attr("d", d => arc(d)) // Fix: Pass arc as a value function
-			.attr("fill", d => Number(d.data) > 20 ? "red" : "green");
+			.attr("d", arc)
+			.attr("fill", (d, i) => d3.schemeCategory10[i % 10]); // Use a color scheme for different colors
 
 		if (svg.node()) {
 			contentEl.appendChild(svg.node());
@@ -186,3 +190,10 @@ export default class MyPlugin extends Plugin {
 	}
 }
 
+// Additional styles for the PieChartModal
+.pie-chart-modal {
+	background: none;
+	box-shadow: none;
+	width: auto;
+	height: auto;
+}
