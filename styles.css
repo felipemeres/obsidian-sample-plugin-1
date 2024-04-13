@@ -6,3 +6,12 @@ available in the app when your plugin is enabled.
 If your plugin does not need CSS, delete this file.
 
 */
+/* Styles for the PieChartModal */
+.pie-chart-modal {
+	background: none;
+	box-shadow: none;
+	width: auto;
+	height: auto;
+	padding: 0;
+	border: none;
+}
