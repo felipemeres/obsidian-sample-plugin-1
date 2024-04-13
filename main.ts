@@ -55,11 +55,11 @@ class PieChartModal extends Modal {
 		if (svg.node()) {
 			contentEl.appendChild(svg.node());
 		}
-			.attr("d", d => arc(d)) // Fix: Pass arc as a value function
-			.attr("fill", (d, i) => d3.schemeCategory10[i % 10]); // Use a color scheme for different colors
+			.attr("d", arc)
+			.attr("fill", (d, i) => d3.interpolateRainbow(i / data.length)); // Use the rainbow color scale
 
-		if (svg.node()) {
-			const svgNode = svg.node() as Node; // Cast svg.node() to Node
+		const svgNode = svg.node();
+		if (svgNode) {
 			contentEl.appendChild(svgNode);
 		}
 		// code: Logic to render the pie chart is now included
