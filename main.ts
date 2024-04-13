@@ -1,4 +1,4 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, Command } from 'obsidian';
 
 // Remember to rename these classes and interfaces!
 
@@ -10,19 +10,14 @@ const DEFAULT_SETTINGS: MyPluginSettings = {
 	mySetting: 'default'
 }
 
-
-// code: Add the PieChartModal class implementation here
-class PieChartModal extends Modal {
+class SampleModal extends Modal {
 	constructor(app: App) {
 		super(app);
 	}
 
 	onOpen() {
 		const { contentEl } = this;
-		// Here you would use a library like Chart.js or D3.js to create the actual pie chart
-		// For simplicity, we're just going to set some placeholder text
-		contentEl.setText('Feeling Wheel Placeholder');
-		// You would also include the logic to render the pie chart here
+		contentEl.setText('Woah oi querida!');
 	}
 
 	onClose() {
@@ -31,7 +26,6 @@ class PieChartModal extends Modal {
 	}
 }
 
-
 class PieChartModal extends Modal {
 	constructor(app: App) {
 		super(app);
@@ -39,10 +33,9 @@ class PieChartModal extends Modal {
 
 	onOpen() {
 		const { contentEl } = this;
-		// Here you would use a library like Chart.js or D3.js to create the actual pie chart
-		// For simplicity, we're just going to set some placeholder text
-		contentEl.setText('Feeling Wheel Placeholder');
-		// You would also include the logic to render the pie chart here
+		// <!-- code: use D3.js to create the actual pie chart  -->
+		contentEl.setText('Feeling Wheel ');
+		// <!-- code: include the logic to render the pie chart here  -->
 	}
 
 	onClose() {
@@ -104,6 +97,15 @@ export default class MyPlugin extends Plugin {
 		});
 		// This adds an editor command that can perform some operation on the current editor instance
 		this.addCommand({
+			id: 'sample-editor-command',
+			name: 'Sample editor command',
+			editorCallback: (editor: Editor, view: MarkdownView) => {
+				console.log(editor.getSelection());
+				editor.replaceSelection('Sample Editor Command');
+			}
+		});
+		// This adds a complex command that can check whether the current state of the app allows execution of the command
+		this.addCommand({
 			id: 'open-sample-modal-complex',
 			name: 'Open sample modal (complex)',
 			checkCallback: (checking: boolean) => {
@@ -114,7 +116,7 @@ export default class MyPlugin extends Plugin {
 					// If checking is false, then we want to actually perform the operation.
 					if (!checking) {
 						new SampleModal(this.app).open();
-					} 
+					}
 
 					// This command will only show up in Command Palette when the check function returns true
 					return true;
@@ -122,8 +124,8 @@ export default class MyPlugin extends Plugin {
 			}
 		});
 		this.addCommand({
-			id: 'open-sample-modal-simple',
-			name: 'Open sample modal (simple)',
+			id: 'open-feeling-wheel',
+			name: 'Open Feeling Wheel',
 			checkCallback: (checking: boolean) => {
 				// Conditions to check
 				const markdownView = this.app.workspace.getActiveViewOfType(MarkdownView);
@@ -131,7 +133,7 @@ export default class MyPlugin extends Plugin {
 					// If checking is true, we're simply "checking" if the command can be run.
 					// If checking is false, then we want to actually perform the operation.
 					if (!checking) {
-						new SampleModal(this.app).open();
+						new PieChartModal(this.app).open();
 					}
 					return true;
 				}
@@ -140,6 +142,7 @@ export default class MyPlugin extends Plugin {
 
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
+		this.addSettingTab(new SampleSettingTab(this.app, this));
 
 		// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
 		// Using this function will automatically remove the event listener when this plugin is disabled.
@@ -148,7 +151,7 @@ export default class MyPlugin extends Plugin {
 		});
 
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
-		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000)); 
+		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
 	}
 
 
@@ -164,41 +167,4 @@ export default class MyPlugin extends Plugin {
 		await this.saveData(this.settings);
 	}
 }
-// code: Add the command to open the PieChartModal here
-this.addCommand({
-	id: 'open-feeling-wheel',
-	name: 'Open Feeling Wheel',
-	callback: () => {
-		new PieChartModal(this.app).open();
-	}
-});
-
-// code: Add the PieChartModal class implementation here
-class PieChartModal extends Modal {
-	constructor(app: App) {
-		super(app);
-	}
-
-	onOpen() {
-		const { contentEl } = this;
-		// Here you would use a library like Chart.js or D3.js to create the actual pie chart
-		// For simplicity, we're just going to set some placeholder text
-		contentEl.setText('Feeling Wheel Placeholder');
-		// You would also include the logic to render the pie chart here
-	}
-
-	onClose() {
-		const { contentEl } = this;
-		contentEl.empty();
-	}
-}
-
-// code: Add the command to open the PieChartModal here
-this.addCommand({
-	id: 'open-feeling-wheel',
-	name: 'Open Feeling Wheel',
-	callback: () => {
-		new PieChartModal(this.app).open();
-	}
-});
 
