@@ -1,4 +1,5 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, Command } from 'obsidian';
+import * as d3 from 'd3';
 
 // Remember to rename these classes and interfaces!
 
@@ -33,12 +34,12 @@ class PieChartModal extends Modal {
 
 	onOpen() {
 		const { contentEl } = this;
-		// code: Use D3.js to create the actual pie chart
-		// Placeholder for pie chart creation logic using D3.js
+		// <!-- code: refactor the modal so that only the pie chart appears - without a box as a backfrop -->
 		const data = [10, 20, 30, 40]; // Sample data
 		const svg = d3.create("svg")
 			.attr("width", 200)
 			.attr("height", 200);
+		// <!-- code: make the pie a complete circle with multiple separations, making each one a different color -->
 		const pie = d3.pie();
 		const arc = d3.arc().innerRadius(0).outerRadius(100);
 
@@ -46,10 +47,12 @@ class PieChartModal extends Modal {
 			.data(pie(data))
 			.enter()
 			.append("path")
-			.attr("d", arc)
-			.attr("fill", d => d.data > 20 ? "red" : "green");
+			.attr("d", d => arc(d)) // Fix: Pass arc as a value function
+			.attr("fill", d => Number(d.data) > 20 ? "red" : "green");
 
-		contentEl.appendChild(svg.node());
+		if (svg.node()) {
+			contentEl.appendChild(svg.node());
+		}
 		// code: Logic to render the pie chart is now included
 	}
 
