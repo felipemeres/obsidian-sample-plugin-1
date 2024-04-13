@@ -10,32 +10,64 @@ const DEFAULT_SETTINGS: MyPluginSettings = {
 	mySetting: 'default'
 }
 
-// Add a new command for opening the Feeling Wheel
-this.addCommand({
-    id: 'open-feeling-wheel',
-    name: 'Open Feeling Wheel',
-    callback: () => {
-        new PieChartModal(this.app).open();
-    }
-});
+class SampleModal extends Modal {
+	constructor(app: App) {
+		super(app);
+	}
+
+	onOpen() {
+		const { contentEl } = this;
+		contentEl.setText('Woah oi querida!');
+	}
+
+	onClose() {
+		const { contentEl } = this;
+		contentEl.empty();
+	}
+}
 
 class PieChartModal extends Modal {
-    constructor(app: App) {
-        super(app);
-    }
+	constructor(app: App) {
+		super(app);
+	}
 
-    onOpen() {
-        const { contentEl } = this;
-        // Here you would use a library like Chart.js or D3.js to create the actual pie chart
-        // For simplicity, we're just going to set some placeholder text
-        contentEl.setText('Feeling Wheel Placeholder');
-        // You would also include the logic to render the pie chart here
-    }
+	onOpen() {
+		const { contentEl } = this;
+		// Here you would use a library like Chart.js or D3.js to create the actual pie chart
+		// For simplicity, we're just going to set some placeholder text
+		contentEl.setText('Feeling Wheel Placeholder');
+		// You would also include the logic to render the pie chart here
+	}
 
-    onClose() {
-        const { contentEl } = this;
-        contentEl.empty();
-    }
+	onClose() {
+		const { contentEl } = this;
+		contentEl.empty();
+	}
+}
+class SampleSettingTab extends PluginSettingTab {
+	plugin: MyPlugin;
+
+	constructor(app: App, plugin: MyPlugin) {
+		super(app, plugin);
+		this.plugin = plugin;
+	}
+
+	display(): void {
+		const { containerEl } = this;
+
+		containerEl.empty();
+
+		new Setting(containerEl)
+			.setName('Setting #1')
+			.setDesc('It\'s a secret')
+			.addText(text => text
+				.setPlaceholder('Enter your secret')
+				.setValue(this.plugin.settings.mySetting)
+				.onChange(async (value) => {
+					this.plugin.settings.mySetting = value;
+					await this.plugin.saveSettings();
+				}));
+	}
 }
 
 export default class MyPlugin extends Plugin {
@@ -92,6 +124,23 @@ export default class MyPlugin extends Plugin {
 				}
 			}
 		});
+		this.addCommand({
+			id: 'open-feeling-wheel',
+			name: 'Open Feeling Wheel',
+			checkCallback: (checking: boolean) => {
+				// Conditions to check
+				const markdownView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (markdownView) {
+					// If checking is true, we're simply "checking" if the command can be run.
+					// If checking is false, then we want to actually perform the operation.
+					if (!checking) {
+						new PieChartModal(this.app).open();
+					}
+					return true;
+				}
+			}
+		});
+
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
 		this.addSettingTab(new SampleSettingTab(this.app, this));
@@ -104,27 +153,8 @@ export default class MyPlugin extends Plugin {
 
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
 		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
-
-		class PieChartModal extends Modal {
-		constructor(app: App) {
-			super(app);
-		}
-
-		onOpen() {
-			const { contentEl } = this;
-			// Implementation details for creating a pie chart shaped modal would go here
-			contentEl.setText('Pie Chart Modal Placeholder');
-		}
-
-		onClose() {
-			const { contentEl } = this;
-			contentEl.empty();
-		}
 	}
 
-	// Now you can create a PieChartModal instance and call its open method to display it
-	// Example: new PieChartModal(this.app).open();
-	}
 
 	onunload() {
 
@@ -139,52 +169,3 @@ export default class MyPlugin extends Plugin {
 	}
 }
 
-class SampleModal extends Modal {
-	constructor(app: App) {
-		super(app);
-	}
-
-	onOpen() {
-		const { contentEl } = this;
-		contentEl.setText('Woah!');
-	}
-
-	onClose() {
-		const { contentEl } = this;
-		contentEl.empty();
-	}
-}
-
-class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
-
-	constructor(app: App, plugin: MyPlugin) {
-		super(app, plugin);
-		this.plugin = plugin;
-	}
-
-	display(): void {
-		const { containerEl } = this;
-
-		containerEl.empty();
-
-		new Setting(containerEl)
-			.setName('Setting #1')
-			.setDesc('It\'s a secret')
-			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue(this.plugin.settings.mySetting)
-				.onChange(async (value) => {
-					this.plugin.settings.mySetting = value;
-					await this.plugin.saveSettings();
-				}));
-	}
-}
-// Add a new command for opening the Feeling Wheel
-this.addCommand({
-    id: 'open-feeling-wheel',
-    name: 'Open Feeling Wheel',
-    callback: () => {
-        new PieChartModal(this.app).open();
-    }
-});
