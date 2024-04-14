@@ -1,0 +1,41 @@
+{
+	"feelings": [
+		{
+			"name": "Angry",
+			"children": [
+				"Let down",
+				"Humiliated",
+				"Bitter",
+				"Mad",
+				"Aggressive",
+				"Frustrated",
+				"Distant",
+				"Critical"
+			]
+		},
+		{
+			"name": "Fearful",
+			"children": []
+		},
+		{
+			"name": "Bad",
+			"children": []
+		},
+		{
+			"name": "Surprised",
+			"children": []
+		},
+		{
+			"name": "Happy",
+			"children": []
+		},
+		{
+			"name": "Sad",
+			"children": []
+		},
+		{
+			"name": "Disgusted",
+			"children": []
+		}
+	]
+}

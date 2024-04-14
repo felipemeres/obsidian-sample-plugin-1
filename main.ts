@@ -194,11 +194,3 @@ export default class MyPlugin extends Plugin {
 		await this.saveData(this.settings);
 	}
 }
-
-// Additional styles for the PieChartModal
-.pie - chart - modal {
-	background: none;
-	box - shadow: none;
-	width: auto;
-	height: auto;
-}
