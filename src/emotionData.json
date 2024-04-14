@@ -3,39 +3,88 @@
 		{
 			"name": "Angry",
 			"children": [
-				"Let down",
-				"Humiliated",
-				"Bitter",
-				"Mad",
-				"Aggressive",
-				"Frustrated",
-				"Distant",
-				"Critical"
+				"Let down": [
+					{
+						"name": "Betrayed"
+				}
+			],
+				"Humiliated": [
+					{
+						"name": "Disrespected"
+				}
+			],
+				"Bitter": [
+					{
+						"name": "Resentful"
+				}
+			],
+				"Mad": [
+					{
+						"name": "Furious"
+				}
+			],
+				"Aggressive": [
+					{
+						"name": "Provoked"
+				}
+			],
+				"Frustrated": [
+					{
+						"name": "Impatient"
+				}
+			],
+				"Distant": [
+					{
+						"name": "Alone"
+				}
+			],
+				"Critical": [
+					{
+						"name": "Skeptical"
+				}
+			],
 			]
 		},
 		{
 			"name": "Fearful",
-			"children": []
+			"children": ["Scared", "Anxious", "Insecure", "Weak", "Rejected"]
 		},
 		{
 			"name": "Bad",
-			"children": []
+			"children": ["Bored", "Busy", "Stressed", "Tired"]
 		},
 		{
 			"name": "Surprised",
-			"children": []
+			"children": ["Startled", "Confused", "Amazed", "Excited"]
 		},
 		{
 			"name": "Happy",
-			"children": []
+			"children": [
+				"Playful",
+				"Content",
+				"Interested",
+				"Proud",
+				"Accepted",
+				"Powerful",
+				"Peaceful",
+				"Trusting",
+				"Optimistic"
+			]
 		},
 		{
 			"name": "Sad",
-			"children": []
+			"children": [
+				"Lonely",
+				"Vulnerable",
+				"Despair",
+				"Guilty",
+				"Depressed",
+				"Hurt"
+			]
 		},
 		{
 			"name": "Disgusted",
-			"children": []
+			"children": ["Disappointed", "Disappointed", "Awful", "Repelled"]
 		}
 	]
 }
