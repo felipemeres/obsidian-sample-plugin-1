@@ -34,40 +34,8 @@ class PieChartModal extends Modal {
 
 	onOpen() {
 		const { contentEl } = this;
-		// code: Modal refactored so that only the pie chart appears without a box as a backdrop
 		contentEl.addClass('pie-chart-modal');
-		const data = [10, 20, 30, 40]; // Sample data
-		const svg = d3.create("svg")
-			.attr("width", 200)
-			.attr("height", 200)
-			.attr("viewBox", "-100 -100 200 200"); // Adjust viewBox for proper scaling and centering
-		// <!-- code: make the pie a complete circle with multiple separations, making each one a different color -->
-		const pie = d3.pie();
-		const arc = d3.arc().innerRadius(0).outerRadius(100);
-
-		svg.selectAll("path")
-			.data(pie(data))
-			.enter()
-			.append("path")
-			.attr("d", arc)
-			.attr("fill", (d, i) => d3.interpolateRainbow(i / data.length)); // Use the rainbow color scale
-
-		if (svg.node()) {
-			contentEl.appendChild(svg.node());
-		}
-			.attr("d", arc)
-			.attr("fill", (d, i) => d3.interpolateRainbow(i / data.length)); // Use the rainbow color scale
-
-		const svgNode = svg.node();
-		if (svgNode) {
-			contentEl.appendChild(svgNode);
-		}
-		// code: Logic to render the pie chart is now included
-	}
-
-	onClose() {
-		const { contentEl } = this;
-		contentEl.empty();
+		// <-- code: add pie chart here using emotionData.ts to retrieve all of the feelings data -->
 	}
 }
 class SampleSettingTab extends PluginSettingTab {
